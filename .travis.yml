@@ -7,4 +7,5 @@ deploy:
   secret_access_key: "SmPi9kKUpbaCXXcY9a66pt6yfko5tpy5crFPBI0S"
   bucket: "retrospective-board"
   upload-dir: snapshot
-  local_dir: artifacts
+  skip_cleanup: true
+  local_dir: target
