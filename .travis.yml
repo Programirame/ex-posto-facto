@@ -6,6 +6,4 @@ deploy:
   access_key_id: "AKIAJTP3SVZXN35BQPYA"
   secret_access_key: "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"
   bucket: "retrospective-board"
-  skip_cleanup: true
   upload-dir: snapshot
-  local_dir: target
