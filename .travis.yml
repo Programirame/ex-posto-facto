@@ -9,3 +9,4 @@ deploy:
   upload-dir: snapshot
   skip_cleanup: true
   local_dir: artifacts
+  region: eu-central-1
