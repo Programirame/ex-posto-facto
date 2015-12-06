@@ -8,4 +8,4 @@ deploy:
   bucket: "retrospective-board"
   upload-dir: snapshot
   skip_cleanup: true
-  local_dir: target
+  local_dir: artifacts
