@@ -3,10 +3,10 @@ jdk:
   - oraclejdk8
 deploy:
   provider: s3
-  access_key_id: "AKIAJTP3SVZXN35BQPYA"
-  secret_access_key: "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"
   bucket: "retrospective-board"
   upload-dir: snapshot
   skip_cleanup: true
   local_dir: artifacts
   region: eu-central-1
+script:
+   - mvn install
