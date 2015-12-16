@@ -1,12 +1,15 @@
-package org.programirame;
+package com.ex.post.facto;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
-public class RetrospectiveServicesApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(RetrospectiveServicesApplication.class, args);
+        ApplicationContext context = SpringApplication.run(Application.class);
+
     }
+
 }
