@@ -1,7 +1,7 @@
 package com.ex.post.facto.controller;
 
 import com.ex.post.facto.model.Board;
-import com.ex.post.facto.repository.BoardRepository;
+import com.ex.post.facto.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,10 +18,10 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
  * Controller that handles all the CRUD operations regarding the retrospect boards.
  */
 @RestController
-public class RetrospectiveController {
+public class BoardController {
 
     @Autowired
-    BoardRepository boardRepo;
+    BoardService boardService;
 
     /**
      * Creates a new board. Returns the URL of the newly created resource in the response header.
@@ -29,14 +29,19 @@ public class RetrospectiveController {
      * @return
      */
     @RequestMapping(value = "/board", method = RequestMethod.POST)
-    public ResponseEntity<?> createRetrospective(@RequestBody Board board) {
+    public ResponseEntity<?> createBoard(@RequestBody Board board) {
 
-        Board newBoard = boardRepo.save(board);
+        Board newBoard = boardService.saveBoard(board);
+        HttpHeaders responseHeaders = getHttpHeaders(newBoard);
+
+        return new ResponseEntity<>(null, responseHeaders, HttpStatus.OK);
+    }
+
+    private HttpHeaders getHttpHeaders(Board newBoard) {
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newPollUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newBoard.getBoardId()).toUri();
         responseHeaders.setLocation(newPollUri);
-
-        return new ResponseEntity<>(null, responseHeaders, HttpStatus.OK);
+        return responseHeaders;
     }
 
     /**
@@ -46,13 +51,13 @@ public class RetrospectiveController {
      */
     @RequestMapping(value = "/board/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<?> getRetrospectiveBoard(@PathVariable Integer id) {
+    public ResponseEntity<?> getBoard(@PathVariable Integer id) {
 
-        Board board = boardRepo.findOne(id);
+        Board board = boardService.findOne(id);
         ResponseEntity<?> response;
         if(board != null) {
-            board.add(linkTo(methodOn(RetrospectiveController.class).getRetrospectiveBoard(id)).withSelfRel());
-            response = new ResponseEntity<>(boardRepo.findOne(id), HttpStatus.OK);
+            board.add(linkTo(methodOn(BoardController.class).getBoard(id)).withSelfRel());
+            response = new ResponseEntity<>(boardService.findOne(id), HttpStatus.OK);
         } else {
             response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
