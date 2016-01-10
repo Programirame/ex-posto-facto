@@ -30,10 +30,10 @@ public class BoardControllerIT {
     private MockMvc mockMvc;
 
     @Mock
-    BoardService boardService;
+    private BoardService boardService;
 
     @InjectMocks
-    BoardController boardController;
+    private BoardController boardController;
 
     @Before
     public void init() {

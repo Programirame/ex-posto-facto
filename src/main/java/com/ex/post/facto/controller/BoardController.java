@@ -21,7 +21,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class BoardController {
 
     @Autowired
-    BoardService boardService;
+    private BoardService boardService;
 
     /**
      * Creates a new board. Returns the URL of the newly created resource in the response header.
