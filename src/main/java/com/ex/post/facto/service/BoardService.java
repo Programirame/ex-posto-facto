@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class BoardService {
 
     @Autowired
-    BoardRepository boardRepo;
+    private BoardRepository boardRepo;
 
     public Board saveBoard(Board board) {
         return boardRepo.save(board);
