@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 public class BoardControllerEndToEndIT {
 
     @Autowired
-    BoardRepository boardRepository;
+    private BoardRepository boardRepository;
 
     private RestTemplate restTemplate = new TestRestTemplate();
 
