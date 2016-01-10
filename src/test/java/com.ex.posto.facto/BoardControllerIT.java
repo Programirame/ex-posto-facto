@@ -16,8 +16,10 @@ import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -51,17 +53,20 @@ public class BoardControllerIT {
     @Test
     public void createNewBoardTest() throws Exception {
         String newBoardJson = "{\n" +
-                "    \"id\" : 1,\n" +
+                "    \"id\" : null,\n" +
                 "    \"boardName\":\"HATEOAS Board\",\n" +
                 "    \"boardDescription\":\"First Time HATEOAS Board\"\n" +
                 "    \n" +
                 "}";
 
-        this.mockMvc.perform(post("/board")
+        MvcResult result = this.mockMvc.perform(post("/board")
                 .contentType(MediaType.APPLICATION_JSON).content(newBoardJson))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk()).andReturn();
+
+        String location = result.getResponse().getHeader("Location");
 
         verify(boardService).saveBoard(getDummyBoard());
+        assertTrue(location.endsWith("/board/1"));
     }
 
     private Board getDummyBoard() {
