@@ -1,12 +1,39 @@
 language: java
 jdk:
   - oraclejdk8
-deploy:
-  provider: s3
-  bucket: "retrospective-board"
-  upload-dir: snapshot
-  skip_cleanup: true
-  local_dir: artifacts
-  region: eu-central-1
 script:
    - mvn install
+env:
+  global:
+    - secure: "Ql2OpU5zpuDpsUoUXTh3p/uHPNIAJm+z8JS286z6rqrMQ5Wphf1S149V0s0k9dTONOqZt3+6L+/z7MmNh6W5uVGrnTv4K9AWrAw6ZgNtFRY6f
+H19lxigvc9LSEfHo/EDavk9VgDIr2akmbnNTIzcc+5TB4YmhW996Vt3o0QgPGD4spucqbL5olW8iO5Ka4s8lSUKFXX5WszRLc1gKx+uEWWV8iMmP/l13YBWw
+JJfc+Z66whUNYAUDrAMmrJ2nmMEJv1V2xdQQOrQxk0aNJyNvCWylw3/vc2s4lQFAA4+YBc5WjyisBkuyIg+n8GaezJR4d2B+oodYEtIjKDLc6L28JteGn9ND
+HWqdq9WVeGNiVcTAZID3uBFJwfY1JJdnfRsTeoA4ZEwvfqdzi1cDB/h13mYvxU6j6+2Hbvw3IQ0nXJYo3Hvmq9SE9y2NXD6IrwvCOHFkdk0hMYRgma743CxK
+5mgzJk3N60SoZAzwRlSja/s4iQPnkXMuhfcRBHbNpzpuqEuQhlG7OUKqPKxWAEhv7io6Yd7jGNAgIKZuifdsTPcLSrxZKJdkHHGdr6mDH5BSE95foarFdWMi
+v+khFfEhxBYfsoj3YoHuybvoGF+Fqqq0YbeU6lITwmIGRQmlKAFmGFTrMHTi30ACQ+Avu2twXnIRXEQA3fNsGJ5O+FyrxY="
+
+addons:
+  coverity_scan:
+
+    # GitHub project metadata
+    # ** specific to your project **
+    project:
+      name:  Programirame/ex-posto-facto
+      version: 1.0
+      description: Ex Posto Facto
+
+    # Where email notification of build analysis results will be sent
+    notification_email: igorce@gmail.com
+
+    # Commands to prepare for build_command
+    # ** likely specific to your build **
+    #build_command_prepend: ./configure
+
+    # The command that will be added as an argument to "cov-build" to compile your project for analysis,
+    # ** likely specific to your build **
+    build_command: mvn clean install
+
+    # Pattern to match selecting branches that will run analysis. We recommend leaving this set to 'coverity_scan'.
+    # Take care in resource usage, and consider the build frequency allowances per
+    #   https://scan.coverity.com/faq#frequency
+    branch_pattern: coverity_scan
