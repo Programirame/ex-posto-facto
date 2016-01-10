@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,7 +49,7 @@ public class BoardControllerIT {
     }
 
     @Test
-    public void simpleQueryTest() throws Exception {
+    public void createNewBoardTest() throws Exception {
         String newBoardJson = "{\n" +
                 "    \"id\" : 1,\n" +
                 "    \"boardName\":\"HATEOAS Board\",\n" +
@@ -59,6 +60,8 @@ public class BoardControllerIT {
         this.mockMvc.perform(post("/board")
                 .contentType(MediaType.APPLICATION_JSON).content(newBoardJson))
                 .andExpect(status().isOk());
+
+        verify(boardService).saveBoard(getDummyBoard());
     }
 
     private Board getDummyBoard() {
