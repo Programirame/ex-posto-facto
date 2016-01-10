@@ -3,4 +3,4 @@ jdk:
   - oraclejdk8
 script:
    - mvn clean install -DskipTests=true
-   - mvn install -DskipTests=false
+   - mvn verify
