@@ -54,16 +54,23 @@ public class BoardController {
     public ResponseEntity<?> getBoard(@PathVariable Integer id) {
 
         Board board = boardService.findOne(id);
+
         ResponseEntity<?> response;
         if(board != null) {
-            board.add(linkTo(methodOn(BoardController.class).getBoard(id)).withSelfRel());
-            response = new ResponseEntity<>(boardService.findOne(id), HttpStatus.OK);
+            board.add(linkTo(methodOn(BoardController.class).getBoard(board.getBoardId())).withSelfRel());
+            response = getFoundBoardResponse(board);
         } else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            response = getNotoundBoardResponse();
         }
 
         return response;
     }
 
+    private ResponseEntity getFoundBoardResponse(Board board) {
+        return new ResponseEntity<>(board, HttpStatus.OK);
+    }
 
+    private ResponseEntity getNotoundBoardResponse() {
+        return ResponseEntity.notFound().build();
+    }
 }

@@ -4,6 +4,8 @@ package com.ex.posto.facto;
 import com.ex.post.facto.controller.BoardController;
 import com.ex.post.facto.model.Board;
 import com.ex.post.facto.service.BoardService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -67,6 +70,31 @@ public class BoardControllerIT {
 
         verify(boardService).saveBoard(getDummyBoard());
         assertTrue(location.endsWith("/board/1"));
+    }
+
+    @Test
+    public void retrieveExistingBoardById() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/board/1"))
+                .andExpect(status().isOk()).andReturn();
+
+        verify(boardService).findOne(1);
+
+        String json = result.getResponse().getContentAsString();
+        JSONObject obj = new JSONObject(json);
+        JSONArray links = obj.getJSONArray("links");
+
+        assertTrue(links.length() > 0);
+    }
+
+    @Test
+    public void retrieveNonExistingBoardById() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/board/2"))
+                .andExpect(status().isNotFound()).andReturn();
+
+        verify(boardService).findOne(2);
+
+        String json = result.getResponse().getContentAsString();
+        assertTrue(json.isEmpty());
     }
 
     private Board getDummyBoard() {
