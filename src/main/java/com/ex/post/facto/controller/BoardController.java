@@ -37,6 +37,18 @@ public class BoardController {
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/board", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllBoards() {
+
+        Iterable<Board> boards = boardService.findAll();
+
+        for (Board board : boards) {
+            board.add(linkTo(methodOn(BoardController.class).getBoard(board.getBoardId())).withSelfRel());
+        }
+
+        return new ResponseEntity<>(boards, HttpStatus.OK);
+    }
+
     private HttpHeaders getHttpHeaders(Board newBoard) {
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newPollUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newBoard.getBoardId()).toUri();

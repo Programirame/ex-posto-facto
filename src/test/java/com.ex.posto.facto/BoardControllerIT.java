@@ -21,6 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -45,11 +47,11 @@ public class BoardControllerIT {
     public void init() {
         MockitoAnnotations.initMocks(this);
 
-        Board dummyBoard = getDummyBoard();
+        Board dummyBoard = getDummyBoard(1);
 
         when(boardService.findOne(1)).thenReturn(dummyBoard);
         when(boardService.saveBoard(dummyBoard)).thenReturn(dummyBoard);
-
+        when(boardService.findAll()).thenReturn(getThreeBoards());
         mockMvc = MockMvcBuilders.standaloneSetup(boardController).build();
     }
 
@@ -68,7 +70,7 @@ public class BoardControllerIT {
 
         String location = result.getResponse().getHeader("Location");
 
-        verify(boardService).saveBoard(getDummyBoard());
+        verify(boardService).saveBoard(getDummyBoard(1));
         assertTrue(location.endsWith("/board/1"));
     }
 
@@ -97,14 +99,40 @@ public class BoardControllerIT {
         assertTrue(json.isEmpty());
     }
 
-    private Board getDummyBoard() {
+    @Test
+    public void retrieveAllBoards() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/board"))
+                .andExpect(status().isOk()).andReturn();
+
+        verify(boardService).findAll();
+
+        String json = result.getResponse().getContentAsString();
+        assertTrue(json.length()>0);
+
+        JSONArray obj = new JSONArray(json);
+        assertTrue(obj.length() == 3);
+
+    }
+
+
+
+    private Board getDummyBoard(int id) {
         Board board = new Board();
 
-        board.setBaordId(1);
+        board.setBaordId(id);
         board.setBoardName("HATEOAS Board");
         board.setBoardDescription("First Time HATEOAS Board");
 
         return board;
+    }
+
+    private Iterable<Board> getThreeBoards() {
+        ArrayList<Board> boards = new ArrayList<>();
+        boards.add(getDummyBoard(1));
+        boards.add(getDummyBoard(2));
+        boards.add(getDummyBoard(3));
+
+        return boards;
     }
 
 }

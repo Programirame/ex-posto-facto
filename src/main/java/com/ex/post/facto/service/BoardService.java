@@ -18,4 +18,8 @@ public class BoardService {
     public Board findOne(Integer id) {
         return boardRepo.findOne(id);
     }
+
+    public Iterable<Board> findAll() {
+        return boardRepo.findAll();
+    }
 }
