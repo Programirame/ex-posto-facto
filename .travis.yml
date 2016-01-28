@@ -12,4 +12,4 @@ deploy:
   app: ex-posto-facto
   domain: postfacto
   on: jart-to-war
-    repo: Programirame/ex-posto-facto
+  repo: Programirame/ex-posto-facto
