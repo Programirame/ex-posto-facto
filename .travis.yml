@@ -11,5 +11,5 @@ deploy:
     secure: ntRTchgC/pN8WKXyTLMF+L8PDJ2nfcJJ40A+NkKVFVpSQgphsveZo/keOWwCHCQQG3OVkC9h2cvQ7+jzLXVvshPJDoWE9uXDBQx/xNJ1a/OGtPHktAn48MVqB8/r9fL9aTaWy+yEpG1U3qzKtQ+Ya0S0jsqUPAvmVJr141YWrLpIW4V8M5hQP+ZIv6sOPg5XcF8XPe0dUSJsseLV2v0iBxmzU9ARy/mFXUcp/D9Cyeej64eiTRpkCphOX7FWDy4kAGN/VrieZn1QeRy5lLug0U9E7eaRDrlbb09eN38Im/tIWTRGQiuHtPT4ac2JkhKyBb6RzU7FcWtjR4nwtlsZZ7ltGs8Xyku9JbBVbkn0cHScs5/8/epZq9CNlrJitIuD/CYiUZ2zCrN04S2QBqUBJdtSuYqxbIAUHYoL4TGuJQABOz3K4qCKwNTqsDmznE+MeA4qbjUoNnNPK5yTzOXajrN4kBRenDdZg03mDkstMxMxwlR10Nv4Fta7Oe/bj6tpfTEj92wan8w9mPaPp/at5/8aximvO3TJY8KK5ZTRb56GgwVO5QHevMK5py9Qx+8iSg7JatUC/5y52pA3JvvH/0hinOkMpFwahwkP7BnErNz/Ii1yGRv1yG5WVQZdhj1INEO5youBUm4DB0Zpw5EbJ+VxIbk1YNB+yu93ApYV1yY=
   app: expostfacto
   domain: postfacto
-  on: jar-to-war
+  deployment-branch: jar-to-war
   repo: Programirame/ex-posto-facto
