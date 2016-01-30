@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Representation of the Retrospective Board. Important here is only the name and the ID.
+ * Each post to the board is linked to this board ID in an other entity.
+ */
 @Entity
 public class Board extends ResourceSupport {
 
